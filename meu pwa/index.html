@@ -6,15 +6,15 @@
     <title>Nua e de Verdade: A Jornada Interativa</title>
     
     <!-- Link para o Manifesto do PWA -->
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/manifest.json">
     
     <!-- Meta tags para tema e comportamento do PWA em dispositivos Apple -->
     <meta name="theme-color" content="#FFF1F2"/>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Nua e Verdade">
-    <!-- AJUSTE: Corrigido para o ícone de maior resolução -->
-    <link rel="apple-touch-icon" href="icons/icon-512x512.png">
+    <!-- AJUSTE: Corrigido para o ícone de maior resolução com caminho absoluto -->
+    <link rel="apple-touch-icon" href="/icons/icon-512x512.png">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -67,8 +67,8 @@
 
         <!-- Seção de Abertura -->
         <header id="inicio" class="text-center min-h-screen flex flex-col justify-center items-center">
-            <!-- AJUSTE: Corrigido o nome do arquivo da imagem da logo -->
-            <img src="icons/icon-512x512.png" alt="Logo Nua e de Verdade" class="w-24 h-24 mb-6 rounded-3xl shadow-lg">
+            <!-- AJUSTE: Corrigido o nome do arquivo da imagem da logo com caminho absoluto -->
+            <img src="/icons/icon-512x512.png" alt="Logo Nua e de Verdade" class="w-24 h-24 mb-6 rounded-3xl shadow-lg">
             <div class="typewriter mb-4">
                 <h1 class="text-4xl md:text-6xl font-bold text-violet-600">Nua e de Verdade</h1>
             </div>
@@ -108,7 +108,7 @@
         // --- Registro do Service Worker (essencial para o PWA) ---
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('service-worker.js') /* Caminho relativo corrigido */
+                navigator.serviceWorker.register('/service-worker.js') /* Caminho absoluto corrigido */
                     .then(registration => {
                         console.log('Service Worker registrado com sucesso:', registration.scope);
                     })
@@ -232,7 +232,7 @@
                         
                         <div class="mt-8 pt-6 border-t-2 border-dashed border-violet-200">
                             <div class="flex items-center gap-3">
-                                <i data-lucide="sparkles" class="text-violet-500"></i>
+                -                  <i data-lucide="sparkles" class="text-violet-500"></i>
                                 <h4 class="text-xl font-bold text-stone-800">${chapterData.exercicio.titulo}</h4>
                             </div>
                             <p class="text-stone-600 mt-2 mb-4">${chapterData.exercicio.descricao}</p>
