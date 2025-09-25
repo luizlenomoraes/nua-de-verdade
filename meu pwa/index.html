@@ -67,7 +67,6 @@
 
         <!-- Seção de Abertura -->
         <header id="inicio" class="text-center min-h-screen flex flex-col justify-center items-center">
-            <!-- AJUSTE: Corrigido o nome do arquivo da imagem da logo com caminho absoluto -->
             <img src="/icons/icon-512x512.png" alt="Logo Nua e de Verdade" class="w-24 h-24 mb-6 rounded-3xl shadow-lg">
             <div class="typewriter mb-4">
                 <h1 class="text-4xl md:text-6xl font-bold text-violet-600">Nua e de Verdade</h1>
@@ -76,6 +75,10 @@
             <button id="startButton" class="bg-violet-500 hover:bg-violet-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 duration-300 ease-in-out">
                 Iniciar a Jornada
             </button>
+            <!-- NOVO: Link para a nova página "Sobre" -->
+            <button id="aboutButton" class="mt-4 text-violet-600 hover:underline">
+                Sobre o Projeto
+            </button>
         </header>
 
         <!-- Container da Jornada (Capítulos) -->
@@ -100,8 +103,22 @@
                  <p class="text-lg text-stone-600 mb-6">Este é um grande passo na redescoberta da sua força e do seu prazer. Lembre-se: você não é um conserto, é uma casa pronta para ser habitada e amada. Continue nua e, acima de tudo, de verdade.</p>
                  <i data-lucide="heart-handshake" class="mx-auto text-violet-500 w-16 h-16"></i>
             </section>
-
         </main>
+
+        <!-- NOVO: Seção da página "Sobre" (começa escondida) -->
+        <section id="sobre" class="hidden min-h-screen flex flex-col justify-center items-center text-center">
+            <div class="bg-white p-8 rounded-2xl shadow-xl max-w-2xl">
+                <h2 class="text-3xl md:text-4xl font-bold text-violet-600 mb-4">Sobre o Projeto</h2>
+                <div class="prose max-w-none prose-stone prose-p:text-stone-600 prose-p:leading-relaxed text-left">
+                    <p>Este projeto, "Nua e de Verdade", é uma jornada interativa de autoconhecimento e redescoberta da autoestima feminina.</p>
+                    <p>Através de seis capítulos e exercícios práticos, a proposta é guiar a usuária por uma reflexão profunda sobre a relação com o próprio corpo, quebrando tabus e reconstruindo a percepção sobre desejo e vulnerabilidade.</p>
+                </div>
+                <button class="back-to-home-button mt-8 bg-violet-500 hover:bg-violet-600 text-white font-bold py-2 px-6 rounded-full transition-transform transform hover:scale-105">
+                    Voltar ao Início
+                </button>
+            </div>
+        </section>
+
     </div>
 
     <script>
@@ -215,11 +232,18 @@
             const progressBar = document.getElementById('progressBar');
             const conclusaoSection = document.getElementById('conclusao');
 
+            // --- NOVO: Seletores para a nova página e botões ---
+            const aboutButton = document.getElementById('aboutButton');
+            const sobreSection = document.getElementById('sobre');
+            const backButtons = document.querySelectorAll('.back-to-home-button');
+
+
             let currentChapter = 0;
             const totalChapters = ebookData.length;
 
             function createChapterHTML(chapterData, index) {
-                const isLocked = index > 0;
+                // Deixei esta função como estava, pois ela não muda
+                const isLocked = index > 0;
                 return `
                     <section id="capitulo-${chapterData.capitulo}" class="p-6 md:p-8 bg-white rounded-2xl shadow-xl transition-opacity duration-1000 ${isLocked ? 'opacity-50 pointer-events-none' : ''}">
                         <div class="flex items-center justify-between mb-4">
@@ -232,7 +256,7 @@
                         
                         <div class="mt-8 pt-6 border-t-2 border-dashed border-violet-200">
                             <div class="flex items-center gap-3">
-                -                  <i data-lucide="sparkles" class="text-violet-500"></i>
+                                <i data-lucide="sparkles" class="text-violet-500"></i>
                                 <h4 class="text-xl font-bold text-stone-800">${chapterData.exercicio.titulo}</h4>
                             </div>
                             <p class="text-stone-600 mt-2 mb-4">${chapterData.exercicio.descricao}</p>
@@ -259,9 +283,26 @@
             startButton.addEventListener('click', () => {
                 inicioSection.classList.add('hidden');
                 jornadaSection.classList.remove('hidden');
+                sobreSection.classList.add('hidden'); // Garante que a seção sobre está escondida
                 currentChapter = 1;
                 updateProgressBar();
             });
+
+            // --- NOVO: Event listener para o botão "Sobre" ---
+            aboutButton.addEventListener('click', () => {
+                inicioSection.classList.add('hidden');
+                jornadaSection.classList.add('hidden');
+                sobreSection.classList.remove('hidden');
+            });
+
+            // --- NOVO: Event listener para os botões de "Voltar" ---
+            backButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    inicioSection.classList.remove('hidden');
+                    jornadaSection.classList.add('hidden');
+                    sobreSection.classList.add('hidden');
+                });
+            });
 
             function attachEventListeners() {
                 document.querySelectorAll('.complete-button').forEach(button => {
