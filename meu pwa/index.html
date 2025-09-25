@@ -1,307 +1,222 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diagnóstico PAINHUNTER™</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Roboto Mono', monospace;
-            background-color: #0a0a0a;
-            color: #e0e0e0;
-        }
-        .container-glow {
-            box-shadow: 0 0 15px rgba(14, 165, 233, 0.3), 0 0 30px rgba(14, 165, 233, 0.2);
-            border: 1px solid rgba(14, 165, 233, 0.4);
-        }
-        .btn-primary {
-            background-color: #0891b2;
-            color: #ffffff;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
-        }
-        .btn-primary:hover {
-            background-color: #06b6d4;
-            transform: translateY(-2px);
-            box-shadow: 0 0 20px rgba(14, 165, 233, 0.8);
-        }
-        .option-btn {
-            border: 1px solid #374151;
-            transition: all 0.3s ease;
-        }
-        .option-btn:hover {
-            border-color: #0891b2;
-            background-color: rgba(14, 165, 233, 0.1);
-            color: #67e8f9;
-        }
-        .option-btn.selected {
-            border-color: #06b6d4;
-            background-color: rgba(14, 165, 233, 0.2);
-            color: #e0f2fe;
-        }
-        .text-cyan-glow {
-            text-shadow: 0 0 5px rgba(14, 165, 233, 0.7), 0 0 10px rgba(14, 165, 233, 0.5);
-        }
-        .progress-bar-inner {
-            background: linear-gradient(90deg, #0891b2, #67e8f9);
-            box-shadow: 0 0 10px #0891b2;
-        }
-        /* Animações */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .fade-in {
-            animation: fadeIn 0.8s ease-out forwards;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nua e de Verdade: A Jornada Interativa</title>
+    
+    <link rel="manifest" href="/manifest.json">
+    
+    <meta name="theme-color" content="#FFF1F2"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Nua e Verdade">
+    <link rel="apple-touch-icon" href="/icons/icon-512x512.png">
 
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-        .pulse-animation {
-            animation: pulse 2s infinite ease-in-out;
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #FFF1F2;
+            /* Adiciona espaço na parte inferior para não cobrir o conteúdo com o menu */
+            padding-bottom: 80px;
+        }
+        h1, h2, h3, h4 { font-family: 'Cormorant Garamond', serif; }
+        .typewriter h1 {
+            overflow: hidden;
+            border-right: .15em solid #A78BFA;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .1em;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #A78BFA; } }
+        /* Classe para esconder seções que não são a página ativa */
+        .page { display: none; }
+        .page.active { display: block; }
+    </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4 bg-black">
+<body class="text-stone-700">
 
-    <div id="quiz-container" class="w-full max-w-2xl mx-auto bg-[#111111] rounded-lg p-6 md:p-10 container-glow">
+    <!-- Container Principal -->
+    <div class="container mx-auto max-w-3xl p-4 md:p-8">
 
-        <!-- Tela de Ativação -->
-        <div id="start-screen" class="text-center fade-in">
-            <div class="flex justify-center mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-syringe text-cyan-glow"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15 1"/><path d="m9 15 4-4"/><path d="m12 12 4-4"/></svg>
-            </div>
-            <h1 class="text-3xl md:text-4xl font-bold text-cyan-400 text-cyan-glow">PAINHUNTER™</h1>
-            <p class="mt-4 text-gray-400">LUZ FRIA, BISTURI.</p>
-            <p class="mt-6 text-lg text-gray-300">Sua ideia está na mesa de cirurgia. O diagnóstico será preciso e o tratamento, brutalmente eficaz. Você está pronto para expor a ferida e transformá-la em receita?</p>
-            <button id="start-btn" class="w-full md:w-auto mt-8 px-8 py-3 text-lg font-bold rounded-md btn-primary">Iniciar Diagnóstico</button>
-        </div>
+        <!-- CADA SEÇÃO AGORA É UMA "PÁGINA" -->
 
-        <!-- Tela do Quiz -->
-        <div id="question-screen" class="hidden">
-            <div class="mb-6">
-                <p id="question-number" class="text-sm font-bold text-cyan-400">PERGUNTA 1 / 5</p>
-                <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
-                    <div id="progress-bar" class="h-2 rounded-full progress-bar-inner" style="width: 20%;"></div>
+        <!-- PÁGINA 1: Abertura -->
+        <header id="inicio" class="page active text-center min-h-screen flex flex-col justify-center items-center">
+            <img src="/icons/icon-512x512.png" alt="Logo Nua e de Verdade" class="w-24 h-24 mb-6 rounded-3xl shadow-lg">
+            <div class="typewriter mb-4">
+                <h1 class="text-4xl md:text-6xl font-bold text-violet-600">Nua e de Verdade</h1>
+            </div>
+            <p class="text-lg md:text-xl text-stone-600 mb-8 max-w-xl">Como se sentir desejável mesmo quando sua autoestima te sabota.</p>
+            <button id="startButton" class="bg-violet-500 hover:bg-violet-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 duration-300 ease-in-out">
+                Iniciar a Jornada
+            </button>
+        </header>
+
+        <!-- PÁGINA 2: Jornada (Capítulos) -->
+        <main id="jornada" class="page">
+            <div class="sticky top-0 z-10 py-4 bg-rose-50/80 backdrop-blur-sm">
+                <h2 class="text-2xl font-bold text-center text-violet-500 mb-2">Sua Jornada</h2>
+                <div class="w-full bg-violet-200 rounded-full h-2.5">
+                    <div id="progressBar" class="bg-violet-500 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+            <div id="capitulosContainer" class="space-y-16 mt-8"></div>
+            <section id="conclusao" class="hidden text-center p-8 bg-white rounded-2xl shadow-xl mt-16">
+                 <h2 class="text-3xl md:text-4xl font-bold text-violet-600 mb-4">Parabéns por concluir sua jornada!</h2>
+                 <p class="text-lg text-stone-600 mb-6">Este é um grande passo na redescoberta da sua força e do seu prazer. Lembre-se: você não é um conserto, é uma casa pronta para ser habitada e amada. Continue nua e, acima de tudo, de verdade.</p>
+                 <i data-lucide="heart-handshake" class="mx-auto text-violet-500 w-16 h-16"></i>
+            </section>
+        </main>
+
+        <!-- PÁGINA 3: Sobre -->
+        <section id="sobre" class="page pt-12 text-center">
+            <div class="bg-white p-8 rounded-2xl shadow-xl max-w-2xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-violet-600 mb-4">Sobre o Projeto</h2>
+                <div class="prose max-w-none prose-stone prose-p:text-stone-600 prose-p:leading-relaxed text-left">
+                    <p>Este projeto, "Nua e de Verdade", é uma jornada interativa de autoconhecimento e redescoberta da autoestima feminina.</p>
+                    <p>Através de seis capítulos e exercícios práticos, a proposta é guiar a usuária por uma reflexão profunda sobre a relação com o próprio corpo, quebrando tabus e reconstruindo a percepção sobre desejo e vulnerabilidade.</p>
                 </div>
             </div>
-            
-            <h2 id="question-text" class="text-xl md:text-2xl font-semibold mb-8 text-gray-100"></h2>
-            
-            <div id="options-container" class="space-y-4">
-                <!-- Opções serão injetadas aqui -->
-            </div>
+        </section>
+    </div>
 
-            <div class="mt-10 text-center">
-                 <p id="feedback" class="text-red-400 h-6 mb-4 text-sm"></p>
-                <button id="next-btn" class="w-full md:w-auto px-10 py-3 text-lg font-bold rounded-md btn-primary">Próximo Corte</button>
-            </div>
-        </div>
-        
-        <!-- Tela de Análise -->
-        <div id="analysis-screen" class="hidden text-center">
-            <div class="flex justify-center mb-6">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-activity pulse-animation"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            </div>
-            <h2 class="text-3xl font-bold text-cyan-400 text-cyan-glow">Analisando suas respostas...</h2>
-            <p class="mt-4 text-gray-400">Cruzando dados. Expondo padrões. Localizando a necrose na sua estratégia.</p>
-        </div>
+    <!-- NOVO: Menu de Navegação Fixo -->
+    <nav class="fixed bottom-4 left-1/2 -translate-x-1/2 w-[90%] max-w-sm bg-white/70 backdrop-blur-xl p-3 rounded-2xl shadow-lg flex justify-around items-center z-50">
+        <button data-page="inicio" class="nav-button flex flex-col items-center text-violet-600">
+            <i data-lucide="home"></i>
+            <span class="text-xs mt-1">Início</span>
+        </button>
+        <button data-page="jornada" id="navJornada" class="nav-button flex flex-col items-center text-stone-400 pointer-events-none">
+            <i data-lucide="book-heart"></i>
+            <span class="text-xs mt-1">Jornada</span>
+        </button>
+        <button data-page="sobre" class="nav-button flex flex-col items-center text-violet-600">
+            <i data-lucide="info"></i>
+            <span class="text-xs mt-1">Sobre</span>
+        </button>
+        <!-- Botão de Instalação do PWA (inicialmente escondido) -->
+        <button id="installButton" class="hidden flex-col items-center text-violet-600 bg-violet-100 p-2 rounded-lg">
+            <i data-lucide="download-cloud"></i>
+            <span class="text-xs mt-1">Instalar</span>
+        </button>
+    </nav>
 
 
-        <!-- Tela de Resultado -->
-        <div id="result-screen" class="hidden text-center">
-             <div class="flex justify-center mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#67e8f9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text text-cyan-glow"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>
-            </div>
-            <h2 class="text-2xl md:text-3xl font-bold text-cyan-400">DIAGNÓSTICO PRÉVIO:</h2>
-            <p id="result-text" class="mt-4 text-lg text-gray-200 bg-gray-900/50 p-4 rounded-md border border-cyan-700/50"></p>
-            
-            <div class="mt-8 text-left p-6 bg-black/30 rounded-lg border border-gray-700">
-                <h3 class="text-xl font-bold text-center text-white mb-4">O TRATAMENTO</h3>
-                <p class="text-gray-300 mb-4">A dor que você sente é um ativo. PAINHUNTER™ é o instrumento cirúrgico que a transforma em uma promessa irresistível. Com ele, você irá:</p>
-                <ul class="space-y-3">
-                    <li class="flex items-start">
-                        <span class="text-cyan-400 mr-3 mt-1">&#10003;</span>
-                        <span><strong>Dissecar sua oferta:</strong> Encontrar o nervo exposto do seu cliente e construir sua mensagem em volta dele.</span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="text-cyan-400 mr-3 mt-1">&#10003;</span>
-                        <span><strong>Calibrar sua copy:</strong> Substituir clichês por gatilhos psicológicos que forçam uma decisão.</span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="text-cyan-400 mr-3 mt-1">&#10003;</span>
-                        <span><strong>Estruturar uma oferta irrecusável:</strong> Transformar features em benefícios e benefícios em resultados inevitáveis.</span>
-                    </li>
-                </ul>
-            </div>
-            
-            <p class="mt-8 text-lg font-semibold text-white">Chega de amadorismo. É hora da cirurgia.</p>
-            <button onclick="window.location.reload()" class="w-full md:w-auto mt-6 px-8 py-3 text-lg font-bold rounded-md btn-primary">Ativar PAINHUNTER™ Agora</button>
-        </div>
-    </div>
+    <script>
+        // --- REGISTRO DO SERVICE WORKER ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(reg => console.log('Service Worker registrado'))
+                    .catch(err => console.log('Falha ao registrar Service Worker:', err));
+            });
+        }
 
-    <script>
-        const quizData = [
-            {
-                question: "Sua promessa principal para o cliente é...",
-                options: [
-                    { text: "Uma lista de funcionalidades e características técnicas.", score: 1 },
-                    { text: "Uma solução genérica, como 'melhorar a vida' ou 'economizar tempo'.", score: 2 },
-                    { text: "Um benefício claro, mas ainda um pouco vago.", score: 3 },
-                    { text: "Uma transformação específica, que ataca uma dor profunda e mensurável.", score: 4 }
-                ]
-            },
-            {
-                question: "Quando um cliente em potencial diz 'Vou pensar', o que você acredita que aconteceu?",
-                options: [
-                    { text: "Ele realmente precisa de tempo. É um processo normal.", score: 1 },
-                    { text: "Faltou explicar melhor o produto, talvez um detalhe técnico.", score: 2 },
-                    { text: "O preço pode ter assustado. Talvez eu devesse oferecer um desconto.", score: 3 },
-                    { text: "A dor que eu toquei não foi aguda o suficiente. A urgência era zero.", score: 4 }
-                ]
-            },
-            {
-                question: "Como você descreve seu público-alvo?",
-                options: [
-                    { text: "Todos que possam se interessar pelo meu mercado.", score: 1 },
-                    { text: "Com dados demográficos: idade, gênero, localização.", score: 2 },
-                    { text: "Com base em interesses e comportamentos gerais.", score: 3 },
-                    { text: "Pela angústia que eles não conseguem resolver sozinhos.", score: 4 }
-                ]
-            },
-            {
-                question: "Sua última campanha de marketing focou em...",
-                options: [
-                    { text: "Mostrar como minha empresa é incrível e inovadora.", score: 1 },
-                    { text: "Educar o mercado sobre a importância do que eu faço.", score: 2 },
-                    { text: "Apresentar os benefícios e as vantagens do meu produto.", score: 3 },
-                    { text: "Agitar uma dor específica e apresentar a única rota de fuga.", score: 4 }
-                ]
-            },
-            {
-                question: "Qual metáfora descreve melhor seu produto no mercado?",
-                options: [
-                    { text: "Uma vitamina: 'é bom ter', mas a vida segue sem ela.", score: 1 },
-                    { text: "Um item de conveniência: útil, mas facilmente substituível.", score: 2 },
-                    { text: "Um analgésico forte: alivia uma dor conhecida, mas não cura a causa.", score: 3 },
-                    { text: "Um bisturi cirúrgico: remove a causa raiz de um problema crítico.", score: 4 }
-                ]
+        // --- LÓGICA DE INSTALAÇÃO DO PWA ---
+        let deferredPrompt;
+        const installButton = document.getElementById('installButton');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Previne que o mini-infobar do Chrome apareça
+            e.preventDefault();
+            // Guarda o evento para que possa ser disparado depois
+            deferredPrompt = e;
+            // Mostra nosso botão de instalação customizado
+            installButton.classList.remove('hidden');
+            installButton.classList.add('flex');
+        });
+
+        installButton.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                // Mostra o prompt de instalação
+                deferredPrompt.prompt();
+                // Espera o usuário responder ao prompt
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response to the install prompt: ${outcome}`);
+                // Limpa o prompt, pois ele só pode ser usado uma vez
+                deferredPrompt = null;
+                // Esconde o botão
+                installButton.classList.add('hidden');
+                installButton.classList.remove('flex');
             }
-        ];
+        });
 
-        const startScreen = document.getElementById('start-screen');
-        const questionScreen = document.getElementById('question-screen');
-        const analysisScreen = document.getElementById('analysis-screen');
-        const resultScreen = document.getElementById('result-screen');
-        
-        const startBtn = document.getElementById('start-btn');
-        const nextBtn = document.getElementById('next-btn');
-        
-        const questionText = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container');
-        const questionNumber = document.getElementById('question-number');
-        const progressBar = document.getElementById('progress-bar');
-        const resultText = document.getElementById('result-text');
-        const feedback = document.getElementById('feedback');
+        window.addEventListener('appinstalled', (evt) => {
+            console.log('PWA foi instalado.');
+            // Esconde o botão de instalação se o app já foi instalado
+            installButton.classList.add('hidden');
+            installButton.classList.remove('flex');
+        });
 
-        let currentQuestionIndex = 0;
-        let userScore = 0;
-        let selectedOption = null;
 
-        startBtn.addEventListener('click', startQuiz);
-        nextBtn.addEventListener('click', nextQuestion);
+        // --- CONTEÚDO DO EBOOK (sem alterações) ---
+        const ebookData = [ { capitulo: 1, titulo: "O Espelho Como Arma", conteudo: [ "Você se olha e o que vê? Uma lista de defeitos, um checklist de imperfeições. O espelho, que deveria ser um portal para o autoconhecimento, virou seu carrasco. Ele reflete não apenas sua imagem, mas o peso de cada crítica que você já internalizou.", "Sua nudez virou um campo de batalha. Cada centímetro do seu corpo é julgado, condenado. E quando o desejo bate à porta, você o recebe com uma armadura de vergonha. Como se entregar de verdade quando uma parte de você quer se esconder?" ], exercicio: { titulo: "O Olhar que Dói, Cura", descricao: "Vá para frente do espelho, nua. Respire fundo três vezes. Apenas se olhe, sem a pressa de se vestir ou a urgência de julgar. Observe uma parte do seu corpo que você costuma criticar. Ao invés do xingamento, agradeça. 'Obrigada, barriga, por guardar minhas histórias.' Faça isso por 5 minutos.", tipo: "reflexao", placeholder: "Escreva aqui como se sentiu durante o exercício. Quais emoções surgiram?" } }, { capitulo: 2, titulo: "Sexo em Posição Fetal (Mesmo de Pernas Abertas)", conteudo: [ "Você está ali, de corpo presente, mas sua mente está em outro lugar. 'Será que ele está gostando?', 'Essa posição esconde minha barriga?'. A entrega vira performance. O prazer vira uma meta a ser batida. Você se encolhe por dentro, mesmo que seu corpo esteja aberto.", "Essa desconexão é a mais cruel das traições: a traição contra si mesma. Você nega seu próprio prazer em nome de uma aprovação que talvez nunca venha, ou que, se vier, soará vazia." ], exercicio: { titulo: "O Corpo que Não Representa", descricao: "Sozinha, em um lugar seguro, experimente posições que te deixam insegura. Fique de quatro, coloque a perna para cima. Sinta o desconforto. Respire nele. Seu corpo não é uma estátua para ser admirada, é um instrumento para ser sentido. O que você sente quando se liberta da necessidade de 'parecer bonita'?", tipo: "reflexao", placeholder: "Descreva as sensações e pensamentos que surgiram ao experimentar essas posições." } }, { capitulo: 3, titulo: "A Vergonha que Se Cala no Travesseiro", conteudo: [ "O sexo acaba. Os corpos se separam. E no silêncio, um sentimento incômodo te visita. Uma sensação de 'foi só isso?'. Uma vergonha por não ter sentido o que 'deveria', por ter fingido, por ter se sentido inadequada. Você afunda o rosto no travesseiro para abafar esse grito silencioso.", "Essa vergonha é o resquício de todas as vezes que você se diminuiu. É a conta que chega por ter se colocado em segundo plano." ], exercicio: { titulo: "O Travesseiro que Confessa", descricao: "Pegue um caderno ou use o espaço abaixo. Após sua próxima relação sexual (ou lembrando da última), escreva livremente sobre o que sentiu depois. Sem filtros. O travesseiro não julga. Nomear o sentimento é o primeiro passo para entendê-lo.", tipo: "diario", placeholder: "Confesse ao seu diário... O que você realmente sentiu quando tudo acabou?" } }, { capitulo: 4, titulo: "Reprogramando o Prazer", conteudo: [ "Sua sensualidade foi sequestrada. Por ex-parceiros, pela mídia, por comentários maldosos. Ela foi condicionada a responder a estímulos que não são seus. É hora do resgate. Reprogramar o prazer é um ato de rebeldia. É reivindicar seu corpo como seu.", "Isso acontece com rituais. Com toques intencionais. Com a decisão consciente de se dar prazer, de descobrir o que te acende, sem depender do outro para acionar o interruptor." ], exercicio: { titulo: "Diário de Reprogramação", descricao: "Durante uma semana, dedique 10 minutos por dia para se tocar. Não precisa ser sexual. Pode ser passar um creme, sentir a textura de um tecido na pele, um autoabraço. Anote no seu diário o que você descobriu. 'Gosto do toque firme nas minhas coxas.' 'Arrepio quando passo a mão no meu pescoço.'", tipo: "diario", placeholder: "Anote aqui suas descobertas diárias sobre seu próprio corpo e seus prazeres." } }, { capitulo: 5, titulo: "Nua, Mas de Pé", conteudo: [ "Vulnerabilidade não é fraqueza, é coragem. Mas existe uma diferença entre se jogar no chão e se mostrar por inteiro, de pé, sustentando o próprio corpo, as próprias verdades. Nua, mas de pé, significa dizer: 'Este é o meu corpo, com suas histórias. Esta sou eu. Se quiser, venha. Se não, a porta está aberta.'", "É parar de pedir desculpas por existir, por sentir, por desejar. É ocupar seu espaço no mundo e na cama." ], exercicio: { titulo: "A Nudez em Pé", descricao: "Escolha uma música que te faça sentir poderosa. Nua, em frente ao espelho, dance. Não para seduzir um outro, mas para seduzir a si mesma. Sinta seus músculos, seu movimento, sua força. Veja a beleza na sua potência, não na sua pose.", tipo: "reflexao", placeholder: "Como foi dançar para si mesma? Que poder você sentiu em seu corpo?" } }, { capitulo: 6, titulo: "A Nova Promessa: Você Não É Conserto", conteudo: [ "A indústria da beleza, a cultura do 'seja sua melhor versão', tudo isso lucra com a sua insegurança. Eles te vendem a ideia de que você é um projeto de reforma eterno. Mas você não é. Você é uma casa pronta. Talvez precise de uma pintura nova, de abrir as janelas, mas a estrutura está aí. Perfeita.", "A promessa não é de se consertar, mas de se habitar. De viver em cada cômodo do seu corpo com amor e aceitação." ], exercicio: { titulo: "A Carta de Nudez", descricao: "Escreva uma carta para si mesma. Um manifesto. Uma declaração de amor e de trégua. Sele o acordo de que você irá se tratar com mais gentileza, que irá honrar seus desejos e que nunca mais irá se encolher. Esta é a sua nova promessa.", tipo: "carta", placeholder: "Querida eu..." } } ];
 
-        function startQuiz() {
-            startScreen.classList.add('hidden');
-            questionScreen.classList.remove('hidden');
-            questionScreen.classList.add('fade-in');
-            showQuestion(currentQuestionIndex);
-        }
+        // --- LÓGICA DA APLICAÇÃO ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const startButton = document.getElementById('startButton');
+            const capitulosContainer = document.getElementById('capitulosContainer');
+            const progressBar = document.getElementById('progressBar');
+            const conclusaoSection = document.getElementById('conclusao');
+            const navJornadaButton = document.getElementById('navJornada');
+            const pages = document.querySelectorAll('.page');
+            const navButtons = document.querySelectorAll('.nav-button');
 
-        function showQuestion(index) {
-            feedback.textContent = '';
-            selectedOption = null;
-            const question = quizData[index];
-            questionText.textContent = question.question;
-            optionsContainer.innerHTML = '';
+            let currentChapter = 0;
+            const totalChapters = ebookData.length;
 
-            question.options.forEach(option => {
-                const button = document.createElement('button');
-                button.textContent = option.text;
-                button.classList.add('w-full', 'p-4', 'rounded-md', 'text-left', 'option-btn');
-                button.onclick = () => selectOption(button, option.score);
-                optionsContainer.appendChild(button);
+            // Função central para mostrar a página correta
+            function showPage(pageId) {
+                pages.forEach(page => {
+                    if (page.id === pageId) {
+                        page.classList.add('active');
+                    } else {
+                        page.classList.remove('active');
+                    }
+                });
+                window.scrollTo(0, 0); // Rola para o topo ao trocar de página
+            }
+
+            // Navegação pelo menu inferior
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const pageId = button.dataset.page;
+                    showPage(pageId);
+                });
             });
-
-            questionNumber.textContent = `PERGUNTA ${index + 1} / ${quizData.length}`;
-            progressBar.style.width = `${((index + 1) / quizData.length) * 100}%`;
-            nextBtn.textContent = (index === quizData.length - 1) ? 'Ver Diagnóstico' : 'Próximo Corte';
-        }
-
-        function selectOption(button, score) {
-            const allOptions = optionsContainer.querySelectorAll('button');
-            allOptions.forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
-            selectedOption = score;
-            feedback.textContent = '';
-        }
-
-        function nextQuestion() {
-            if (selectedOption === null) {
-                feedback.textContent = 'A indecisão é um sintoma. Escolha uma opção.';
-                return;
-            }
-
-            userScore += selectedOption;
-            currentQuestionIndex++;
-
-            if (currentQuestionIndex < quizData.length) {
-                 const currentQuestionDiv = questionScreen;
-                 currentQuestionDiv.classList.remove('fade-in');
-                 void currentQuestionDiv.offsetWidth; // Trigger reflow
-                 currentQuestionDiv.classList.add('fade-in');
-                showQuestion(currentQuestionIndex);
-            } else {
-                showAnalysis();
-            }
-        }
-        
-        function showAnalysis() {
-            questionScreen.classList.add('hidden');
-            analysisScreen.classList.remove('hidden');
-            analysisScreen.classList.add('fade-in');
             
-            setTimeout(() => {
-                analysisScreen.classList.add('hidden');
-                resultScreen.classList.remove('hidden');
-                resultScreen.classList.add('fade-in');
-                showResult();
-            }, 3000);
-        }
-
-        function showResult() {
-            let diagnosis = '';
-            if (userScore <= 8) {
-                diagnosis = "Sintomas de Anemia de Proposta. Sua oferta é uma vitamina em um mercado que precisa de cirurgia. A comunicação é vaga, a dor do cliente é ignorada e suas vendas sofrem de hemorragia crônica.";
-            } else if (userScore <= 14) {
-                diagnosis = "Quadro de Miopia Estratégica. Você enxerga o problema, mas de longe. Usa analgésicos quando o caso é cirúrgico. Sua mensagem alivia, mas não cura, e por isso, não comanda lealdade ou urgência.";
-            } else if (userScore <= 18) {
-                diagnosis = "Potencial Cirúrgico em Observação. Você tem o instinto, a lâmina está na mão, mas hesita em fazer o corte profundo. Falta precisão e a coragem de ignorar o superficial para atacar a causa raiz da dor.";
-            } else {
-                diagnosis = "DNA de Predador Clínico. Você já opera em outro nível. Entende que o lucro não está no produto, mas na extração precisa da dor. Seu instinto é afiado, mas precisa do arsenal completo para dominar o território.";
-            }
-            resultText.textContent = diagnosis;
-        }
-    </script>
+            // Botão "Iniciar Jornada"
+            startButton.addEventListener('click', () => {
+                showPage('jornada');
+                currentChapter = 1;
+                updateProgressBar();
+                // Ativa o botão da jornada no menu
+                navJornadaButton.classList.remove('text-stone-400', 'pointer-events-none');
+                navJornadaButton.classList.add('text-violet-600');
+            });
+            
+            // O resto da sua lógica de capítulos...
+            // ... (funções createChapterHTML, loadSavedData, attachEventListeners, etc.)
+            function createChapterHTML(chapterData, index) { const isLocked = index > 0; return ` <section id="capitulo-${chapterData.capitulo}" class="p-6 md:p-8 bg-white rounded-2xl shadow-xl transition-opacity duration-1000 ${isLocked ? 'opacity-50 pointer-events-none' : ''}"> <div class="flex items-center justify-between mb-4"> <h3 class="text-2xl md:text-3xl font-bold text-violet-600">${chapterData.titulo}</h3> <span class="text-sm font-semibold bg-violet-100 text-violet-700 py-1 px-3 rounded-full">Capítulo ${chapterData.capitulo}</span> </div> <div class="prose max-w-none prose-stone prose-p:text-stone-600 prose-p:leading-relaxed"> ${chapterData.conteudo.map(p => `<p>${p}</p>`).join('')} </div> <div class="mt-8 pt-6 border-t-2 border-dashed border-violet-200"> <div class="flex items-center gap-3"> <i data-lucide="sparkles" class="text-violet-500"></i> <h4 class="text-xl font-bold text-stone-800">${chapterData.exercicio.titulo}</h4> </div> <p class="text-stone-600 mt-2 mb-4">${chapterData.exercicio.descricao}</p> <textarea id="exercicio-input-${chapterData.capitulo}" class="w-full h-40 p-4 bg-rose-50 border border-violet-200 rounded-lg focus:ring-2 focus:ring-violet-400 focus:border-violet-400 transition" placeholder="${chapterData.exercicio.placeholder}"></textarea> <div class="flex justify-end items-center gap-4 mt-4"> <button class="save-button text-sm text-violet-600 hover:underline" data-capitulo="${chapterData.capitulo}">Salvar reflexão</button> <button class="complete-button bg-violet-500 hover:bg-violet-600 text-white font-semibold py-2 px-6 rounded-full transition-transform transform hover:scale-105" data-capitulo="${chapterData.capitulo}">Concluir Capítulo</button> </div> </div> </section> `; }
+            function loadSavedData() { ebookData.forEach(chapter => { const savedText = localStorage.getItem(`exercicio_cap_${chapter.capitulo}`); if (savedText) { const textarea = document.getElementById(`exercicio-input-${chapter.capitulo}`); if(textarea) textarea.value = savedText; } }); }
+            function attachEventListeners() { document.querySelectorAll('.complete-button').forEach(button => { button.addEventListener('click', (e) => { const chapterNum = parseInt(e.target.dataset.capitulo); if (chapterNum < totalChapters) { unlockNextChapter(chapterNum); } else { showConclusion(); } }); }); document.querySelectorAll('.save-button').forEach(button => { button.addEventListener('click', (e) => { const chapterNum = parseInt(e.target.dataset.capitulo); const textarea = document.getElementById(`exercicio-input-${chapterNum}`); localStorage.setItem(`exercicio_cap_${chapterNum}`, textarea.value); e.target.textContent = 'Salvo!'; e.target.classList.add('text-green-600'); setTimeout(() => { e.target.textContent = 'Salvar reflexão'; e.target.classList.remove('text-green-600'); }, 2000); }); }); }
+            function unlockNextChapter(completedChapterNum) { currentChapter = completedChapterNum + 1; const nextChapterElement = document.getElementById(`capitulo-${currentChapter}`); if (nextChapterElement) { nextChapterElement.classList.remove('opacity-50', 'pointer-events-none'); nextChapterElement.scrollIntoView({ behavior: 'smooth', block: 'center' }); } updateProgressBar(); }
+            function showConclusion() { currentChapter = totalChapters + 1; conclusaoSection.classList.remove('hidden'); conclusaoSection.scrollIntoView({ behavior: 'smooth', block: 'center' }); updateProgressBar(); }
+            function updateProgressBar() { const progress = Math.min(((currentChapter - 1) / totalChapters) * 100, 100); progressBar.style.width = `${progress}%`; }
+            function initializeApp() { capitulosContainer.innerHTML = ebookData.map(createChapterHTML).join(''); loadSavedData(); attachEventListeners(); lucide.createIcons(); }
+            initializeApp();
+        });
+    </script>
 </body>
 </html>
+
